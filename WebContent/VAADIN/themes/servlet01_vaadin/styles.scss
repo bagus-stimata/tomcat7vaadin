@@ -1,0 +1,9 @@
+@import "addons.scss";
+@import "servlet01_vaadin.scss";
+
+/* This file prefixes all rules with the theme name to avoid causing conflicts with other themes. */
+/* The actual styles should be defined in servlet01_vaadin.scss */
+.servlet01_vaadin {
+  @include addons;
+  @include servlet01_vaadin;
+}
