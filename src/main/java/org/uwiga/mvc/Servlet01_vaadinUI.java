@@ -69,7 +69,7 @@ public class Servlet01_vaadinUI extends UI {
 			Connection conn = null;	
 			Statement stat = null;
 			try {
-				conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/tomcat7vaadin","adminNKNpS2j", "JjRBuGv7pKAP");		 
+				conn = DriverManager.getConnection("jdbc:mysql://tomcat7vaadin-bagusstimata.rhcloud.com:3306/tomcat7vaadin","adminNKNpS2j", "JjRBuGv7pKAP");		 
 				stat = conn.createStatement();
 				String sql = "SELECT * FROM mhs";
 				ResultSet rs = stat.executeQuery(sql);
