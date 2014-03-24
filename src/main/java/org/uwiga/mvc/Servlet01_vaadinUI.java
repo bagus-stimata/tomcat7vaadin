@@ -55,6 +55,18 @@ public class Servlet01_vaadinUI extends UI {
 			}
 		});
 		
+		layout.addComponent(teks1);
+		layout.addComponent(teks2);
+		layout.addComponent(button);
+		
+		String host = System.getenv("OPENSHIFT_MYSQL_DB_HOST");
+		String port = System.getenv("OPENSHIFT_MYSQL_DB_PORT");
+
+		String url = "jdbc:mysql://"+host+":"+port+"/tomcat7vaadin";
+		
+		layout.addComponent(new Label(host));
+		layout.addComponent(new Label(port));
+		
 			try {
 			   Class.forName("com.mysql.jdbc.Driver").newInstance();
 			   
@@ -67,10 +79,17 @@ public class Servlet01_vaadinUI extends UI {
 			   System.out.println("Error: unable to instantiate driver!");
 			}
 			
-/*			Connection conn = null;	
+			Connection conn = null;	
 			Statement stat = null;
 			try {
-				conn = DriverManager.getConnection("jdbc:mysql://adminNKNpS2j:JjRBuGv7pKAP@127.3.110.129:3306/tomcat7vaadin");		 
+//				conn = DriverManager.getConnection("jdbc:mysql://adminNKNpS2j:JjRBuGv7pKAP@127.3.110.129:3306/tomcat7vaadin");		 
+				conn = DriverManager.getConnection(url, "adminNKNpS2j", "JjRBuGv7pKAP");		 
+			} catch (SQLException e) {
+				System.out.println("Connection Failed! Check output console");
+				e.printStackTrace();
+				return;
+			}	
+			try {
 				stat = conn.createStatement();
 				String sql = "SELECT * FROM mhs";
 				ResultSet rs = stat.executeQuery(sql);
@@ -78,25 +97,12 @@ public class Servlet01_vaadinUI extends UI {
 					layout.addComponent(new Label(rs.getString(1)));
 					layout.addComponent(new Label(rs.getString(2)));
 				}
-			} catch (SQLException e) {
-				System.out.println("Connection Failed! Check output console");
-				e.printStackTrace();
-				return;
-			}	
-*/
+				
+			} catch(SQLException e){
+				System.out.println("Error Query");				
+			}
 			
 			
-		layout.addComponent(teks1);
-		layout.addComponent(teks2);
-		layout.addComponent(button);
-		
-		String host = System.getenv("OPENSHIFT_MYSQL_DB_HOST");
-		String port = System.getenv("OPENSHIFT_MYSQL_DB_PORT");
-
-		String url = "jdbc:mysql://"+host+":"+port+"/tomcat7vaadin";
-		
-		layout.addComponent(new Label(host));
-		layout.addComponent(new Label(port));
 		
 	}
 
