@@ -1,5 +1,13 @@
 package org.uwiga.mvc;
 
+import java.sql.Connection;
+import java.sql.Driver;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import javax.naming.spi.DirStateFactory.Result;
 import javax.servlet.annotation.WebServlet;
 
 import com.vaadin.annotations.Theme;
@@ -47,9 +55,39 @@ public class Servlet01_vaadinUI extends UI {
 			}
 		});
 		
+			try {
+			   Class.forName("com.mysql.jdbc.Driver").newInstance();
+			   
+			}
+			catch(ClassNotFoundException ex) {
+			   System.out.println("Error: unable to load driver class!");			   
+			}catch(IllegalAccessException ex) {
+			   System.out.println("Error: access problem while loading!");
+			}catch(InstantiationException ex) {
+			   System.out.println("Error: unable to instantiate driver!");
+			}
+			Connection conn = null;	
+			Statement stat = null;
+			try {
+				conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/tomcat7vaadin","adminNKNpS2j", "JjRBuGv7pKAP");		 
+				stat = conn.createStatement();
+				String sql = "SELECT * FROM mhs";
+				ResultSet rs = stat.executeQuery(sql);
+				while(rs.next()){
+					layout.addComponent(new Label(rs.getString(1)));
+					layout.addComponent(new Label(rs.getString(2)));
+				}
+			} catch (SQLException e) {
+				System.out.println("Connection Failed! Check output console");
+				e.printStackTrace();
+				return;
+			}	
+		
 		layout.addComponent(teks1);
 		layout.addComponent(teks2);
 		layout.addComponent(button);
 	}
 
+
+	
 }
