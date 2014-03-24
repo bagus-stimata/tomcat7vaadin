@@ -66,12 +66,11 @@ public class Servlet01_vaadinUI extends UI {
 			}catch(InstantiationException ex) {
 			   System.out.println("Error: unable to instantiate driver!");
 			}
-			Connection conn = null;	
+			
+/*			Connection conn = null;	
 			Statement stat = null;
 			try {
-/*				conn = DriverManager.getConnection("jdbc:mysql://tomcat7vaadin-bagusstimata.rhcloud.com:3306/tomcat7vaadin","adminNKNpS2j", "JjRBuGv7pKAP");		 
-*/				
-				conn = DriverManager.getConnection("jdbc:mysql://$OPENSHIFT_MYSQL_DB_HOST:$OPENSHIFT_MYSQL_DB_PORT/tomcat7vaadin","adminNKNpS2j", "JjRBuGv7pKAP");		 
+				conn = DriverManager.getConnection("jdbc:mysql://adminNKNpS2j:JjRBuGv7pKAP@127.3.110.129:3306/tomcat7vaadin");		 
 				stat = conn.createStatement();
 				String sql = "SELECT * FROM mhs";
 				ResultSet rs = stat.executeQuery(sql);
@@ -84,10 +83,21 @@ public class Servlet01_vaadinUI extends UI {
 				e.printStackTrace();
 				return;
 			}	
-		
+*/
+			
+			
 		layout.addComponent(teks1);
 		layout.addComponent(teks2);
 		layout.addComponent(button);
+		
+		String host = System.getenv("OPENSHIFT_MYSQL_DB_HOST");
+		String port = System.getenv("OPENSHIFT_MYSQL_DB_PORT");
+
+		String url = "jdbc:mysql://"+host+":"+port+"/tomcat7vaadin";
+		
+		layout.addComponent(new Label(host));
+		layout.addComponent(new Label(port));
+		
 	}
 
 
